@@ -9,39 +9,37 @@ const app = express();
 const dbURI =
   "mongodb+srv://<username>:<password>@testcluster.yghusht.mongodb.net/<collectionName>?retryWrites=true&w=majority&appName=<clusterName>";
 
-// connect the database and start the server
+// Connect the database and start the server
 mongoose
   .connect(dbURI)
   .then((result) => app.listen(3000))
   .catch((err) => console.log(err));
 
-// middleware and static files
+// Middleware and static files
 app.set("view engine", "ejs");
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: true }));
-
-// Session middleware
 app.use(
   session({
-    secret: "mysecret", // Una stringa segreta per firmare il cookie della sessione
-    resave: false, // Evita di salvare la sessione se non è stata modificata
-    saveUninitialized: true, // Salva una sessione non inizializzata
+    secret: "mysecret", // A secret string to sign the session's cookies
+    resave: false, // Avoid saving the session if it was not modified
+    saveUninitialized: true, // Save an uninitialized session
   })
 );
 
-// Impostazione variabili locali per le notifiche
+// Setting variables for modifiers
 app.use((req, res, next) => {
   res.locals.success = req.session.success;
   delete req.session.success;
   next();
 });
 
-// setting "/menu" as the main directory
+// Setting "/menu" as the main directory
 app.get("/", (req, res) => {
   res.redirect("/menu");
 });
 
-// get the menu items from the database
+// Get the menu items from the database
 app.get("/menu", (req, res) => {
   const cartCount = req.session.cart ? req.session.cart.length : 0;
 
@@ -50,7 +48,7 @@ app.get("/menu", (req, res) => {
     .catch((err) => console.log(err));
 });
 
-// details page for each menu item
+// Details page for each menu item
 app.get("/menu/:id", (req, res) => {
   const id = req.params.id;
 
@@ -59,7 +57,7 @@ app.get("/menu/:id", (req, res) => {
     .catch((err) => console.log(err));
 });
 
-// Aggiungi un articolo al carrello
+// Add an item to the cart
 app.post("/cart/add/:id", (req, res) => {
   const itemId = req.params.id;
   if (!req.session.cart) {
@@ -75,16 +73,21 @@ app.post("/cart/add/:id", (req, res) => {
     .catch((err) => console.log(err));
 });
 
-// Visualizza il carrello
+// View the cart
 app.get("/cart", (req, res) => {
   const cart = req.session.cart || [];
   const total = cart.reduce((sum, item) => sum + item.price, 0);
   res.render("cart", { cart, total });
 });
 
-// Conferma l'ordine
+// Confirm the order
 app.post("/cart/confirm", (req, res) => {
   req.session.cart = [];
   req.session.success = "Ordine effettuato con successo";
   res.redirect("/menu");
 });
+
+// Page not found error
+app.use((req, res) => {
+  res.status(404).render("404");
+})
