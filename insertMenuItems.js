@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const MenuItem = require("./models/menuItem");
 
 const dbURI =
-  "mongodb+srv://aavaris:Norton2024@testcluster.yghusht.mongodb.net/menu?retryWrites=true&w=majority&appName=TestCluster";
+  "mongodb+srv://<username>:<password>@testcluster.yghusht.mongodb.net/<collectionName>?retryWrites=true&w=majority&appName=<clusterName>";
 
 mongoose.connect(dbURI);
 
