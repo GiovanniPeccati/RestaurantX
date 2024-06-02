@@ -7,7 +7,7 @@ const MenuItemModel = require("./models/menuItem");
 const app = express();
 
 const dbURI =
-  "mongodb+srv://aavaris:Norton2024@testcluster.yghusht.mongodb.net/menu?retryWrites=true&w=majority&appName=TestCluster";
+  "mongodb+srv://<username>:<password>@testcluster.yghusht.mongodb.net/<collectionName>?retryWrites=true&w=majority&appName=<clusterName>";
 
 // connect the database and start the server
 mongoose
