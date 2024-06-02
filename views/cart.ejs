@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RestaurantX | Carrello</title>
+    <link rel="stylesheet" href="/styles.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="navbar-brand">
+        <a href="/" class="navbar-brand-link"><h1 class="navbar-title">RestaurantX</h1></a>
+        <p class="navbar-tagline">Il miglior ristorante della galassia</p>
+      </div>
+      </ul>
+    </nav>
+    <h1 class="main-title">Il tuo carrello</h1>
+    <div class="cart">
+      <% if (cart.length > 0) { %>
+      <ul class="cart-items">
+        <% cart.forEach(item => { %>
+        <li class="cart-item">
+          <span class="cart-item-name"><%= item.name %></span>
+          <span class="cart-item-price">$<%= item.price %></span>
+        </li>
+        <% }) %>
+      </ul>
+      <div class="cart-total">
+        <span class="cart-total-label">Totale:</span>
+        <span class="cart-total-value">$<%= total %></span>
+      </div>
+      <form action="/cart/confirm" method="POST">
+        <button type="submit" class="button">Conferma Ordine</button>
+      </form>
+      <% } else { %>
+      <p>Il carrello è vuoto.</p>
+      <% } %>
+    </div>
+    <% if (success) { %>
+    <div class="notification">
+      <p><%= success %></p>
+    </div>
+    <% } %>
+  </body>
+</html>

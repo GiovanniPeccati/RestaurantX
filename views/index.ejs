@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RestaurantX | Menu</title>
+    <link rel="stylesheet" href="/styles.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="navbar-brand">
+        <a href="/" class="navbar-brand-link"
+          ><h1 class="navbar-title">RestaurantX</h1></a
+        >
+        <p class="navbar-tagline">Il miglior ristorante della galassia</p>
+      </div>
+      <ul class="navbar-menu">
+        <li class="navbar-menu-item">
+          <a href="/cart" class="navbar-menu-link">
+            Carrello <% if (cartCount > 0) { %>
+            <span class="cart-count"><%= cartCount %></span>
+            <% } %>
+          </a>
+        </li>
+      </ul>
+    </nav>
+
+    <% if (success) { %>
+    <div class="notification" id="success-message">
+      <p><%= success %></p>
+    </div>
+    <% } %>
+
+    <h1 class="main-title">Il nostro Menu</h1>
+
+    <% const categories = ['Antipasti', 'Pizze', 'Pasta', 'Burger', 'Dessert']; 
+    categories.forEach(category => { %>
+    <div>
+      <h2 class="category-title"><%= category %></h2>
+      <div class="grid">
+        <% menuItems.filter(item => item.category === category).forEach(item =>
+        { %>
+        <div class="card">
+          <div class="card-content">
+            <h2 class="card-title"><%= item.name %></h2>
+            <p class="card-description"><%= item.description %></p>
+            <p class="card-category">Categoria: <%= item.category %></p>
+            <% if (item.allergens.length > 0) { %>
+            <p class="card-allergens">
+              Allergeni: <%= item.allergens.join(', ') %>
+            </p>
+            <% } %>
+          </div>
+          <div class="card-price">$<%= item.price %></div>
+          <div class="card-actions">
+            <a href="/menu/<%= item._id %>" class="button details-button">Dettagli</a>
+            <form
+              action="/cart/add/<%= item._id %>"
+              method="POST"
+              style="display: inline">
+              <button type="submit" class="button">Aggiungi al carrello</button>
+            </form>
+          </div>
+        </div>
+        <% }) %>
+      </div>
+    </div>
+    <% }) %>
+    <footer class="footer">
+      <p>&copy; 2024 RestaurantX. Tutti i diritti riservati.</p>
+    </footer>
+  </body>
+  <script>
+    setTimeout(function () {
+      var successMessage = document.getElementById("success-message");
+      if (successMessage) {
+        successMessage.style.display = "none";
+      }
+    }, 3000);
+  </script>
+</html>

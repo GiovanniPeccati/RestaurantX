@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pagina non trovata</title>
+    <link rel="stylesheet" href="/styles.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="navbar-brand">
+        <a href="/" class="navbar-brand-link"><h1 class="navbar-title">RestaurantX</h1></a>
+        <p class="navbar-tagline">Il miglior ristorante della galassia</p>
+      </div>
+      <ul class="navbar-menu">
+        <li class="navbar-menu-item">
+          <a href="/cart" class="navbar-menu-link">
+            Carrello <% if (cartCount > 0) { %>
+            <span class="cart-count"><%= cartCount %></span>
+            <% } %>
+          </a>
+        </li>
+      </ul>
+    </nav>
+
+    <div class="container">
+      <h1 class="main-title">Pagina non trovata</h1>
+      <p>La pagina che stavi cercando non esiste.</p>
+      <a href="/" class="button">Torna alla Homepage</a>
+    </div>
+
+    <%- include('footer') %>
+  </body>
+</html>
